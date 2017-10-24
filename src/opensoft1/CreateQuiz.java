@@ -8,9 +8,12 @@ package opensoft1;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import static java.awt.image.ImageObserver.WIDTH;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
 
 /**
  *
@@ -43,6 +46,16 @@ public class CreateQuiz extends javax.swing.JFrame {
             public Object getElementAt(int i) { return strings[i]; }
         });
     }
+    private void quitActivity()
+    {
+        AdminHomepage studentHomepage = new AdminHomepage();
+        studentHomepage.setVisible(true);
+        studentHomepage.pack();
+        //studentLogin.setLocationRelativeTo(null);
+        studentHomepage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        studentHomepage.setID(12);
+        this.dispose();
+    }
     
     public CreateQuiz() {
         N = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of questions"));
@@ -60,8 +73,8 @@ public class CreateQuiz extends javax.swing.JFrame {
         }
         current=-1;
         jTextArea1.setVisible(false);
-        jTextField1.setVisible(false);
-        jTextField2.setVisible(false);
+        //jTextField1.setVisible(false);
+        //jTextField2.setVisible(false);
         jList1.addMouseListener(ml);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
@@ -87,6 +100,8 @@ public class CreateQuiz extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,6 +166,20 @@ public class CreateQuiz extends javax.swing.JFrame {
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
 
+        jButton1.setText("Submit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -169,7 +198,12 @@ public class CreateQuiz extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2)))
+                        .addComponent(jTextField2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -191,7 +225,11 @@ public class CreateQuiz extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(242, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,6 +258,38 @@ public class CreateQuiz extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Object[] options = {"Yes return","Cancel"};
+        JOptionPane pane = new JOptionPane();
+        int choice = pane.showOptionDialog(null,"The current quiz will be discarded","Return to Homepage?",YES_NO_OPTION,QUESTION_MESSAGE,null,options,options[0]);
+        if(choice==JOptionPane.YES_OPTION)
+        {
+            quitActivity();
+        }
+        else
+        {
+            pane.remove(WIDTH);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        T = Integer.parseInt(JOptionPane.showInputDialog("Enter the time(number of minutes)"));
+        Object[] options = {"Yes submit","Cancel"};
+        JOptionPane pane = new JOptionPane();
+        int choice = pane.showOptionDialog(null,"The current quiz will be saved","Return to Homepage?",YES_NO_OPTION,QUESTION_MESSAGE,null,options,options[0]);
+        if(choice==JOptionPane.YES_OPTION)
+        {
+            //save question
+            quitActivity();
+        }
+        else
+        {
+            pane.remove(WIDTH);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,15 +340,14 @@ public class CreateQuiz extends javax.swing.JFrame {
            {
                
                questions[current] = jTextArea1.getText();
-               answers[current] = jTextField2.getText();
+               answers[current] = jTextField1.getText();
                marks[current]=Integer.parseInt(jTextField2.getText());
             }
            else
            {
                System.out.println("shit must be visible now");
-               //jTextArea1.setVisible(true);
+               jTextArea1.setVisible(true);
                jTextField1.setVisible(true);
-               jTextField1.setText("here i am");
                jTextField2.setVisible(true);
            }
            
@@ -289,7 +358,7 @@ public class CreateQuiz extends javax.swing.JFrame {
         }
         //}
     };
-    
+    private int T;
     private int N;
     private String[] questions;
     private String[] answers;
@@ -297,6 +366,8 @@ public class CreateQuiz extends javax.swing.JFrame {
     private int maxscore;
     private int current;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
