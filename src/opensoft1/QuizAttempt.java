@@ -83,6 +83,7 @@ public class QuizAttempt extends javax.swing.JFrame {
     
     private void quitActivity()
     {
+        timer.cancel();
         StudentHomepage studentHomepage= new StudentHomepage();
         studentHomepage.setVisible(true);
         studentHomepage.pack();
@@ -266,7 +267,7 @@ public class QuizAttempt extends javax.swing.JFrame {
                     .addComponent(jLabel19)
                     .addComponent(jLabel20)
                     .addComponent(jLabel21))
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addContainerGap(275, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -417,6 +418,17 @@ public class QuizAttempt extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Object[] options = {"Yes submit","Cancel"};
+        JOptionPane pane = new JOptionPane();
+        int choice = pane.showOptionDialog(null,"You will not be able to attempt this quiz again. The answers will now be submitted","Return to Homepage?",YES_NO_OPTION,QUESTION_MESSAGE,null,options,options[0]);
+        if(choice==JOptionPane.YES_OPTION)
+        {
+            quitActivity();
+        }
+        else
+        {
+            pane.remove(WIDTH);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
